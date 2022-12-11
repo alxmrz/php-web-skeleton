@@ -1,0 +1,30 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+      - ./docker/nginx/logs:/var/log/nginx
+      - ./src:/app
+    links:
+      - php
+  php:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    links:
+      - db
+    volumes:
+      - ./src:/app
+    working_dir: /app
+  db:
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "skeleton"
+      POSTGRES_USER: "skeleton"
+      POSTGRES_PASSWORD: "skeleton"
+    ports:
+      - "5432:5432"
