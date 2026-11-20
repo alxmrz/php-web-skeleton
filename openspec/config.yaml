@@ -19,6 +19,22 @@ schema: spec-driven
 #     tasks:
 #       - Break tasks into chunks of max 2 hours
 
+rules:
+  specs:
+    - >-
+      Методика и обязательный контракт spec.md — скилл `spec-authoring`
+      (`.opencode/skills/spec-authoring/`): разделы «Таблица изменений»,
+      «Таблица тестов», «Таблица API» в `references/traceability.md`. Загрузи
+      скилл перед написанием или правкой спеки.
+  design:
+    - >-
+      Методика и обязательный набор диаграмм — скилл `spec-authoring`,
+      `references/design-diagrams.md`. Все диаграммы только в design.md.
+  tasks:
+    - >-
+      Методика нарезки задач — скилл `spec-authoring`,
+      `references/tasks-slicing.md`.
+
 # Per-operation guidance (optional)
 # Add advisory guidance for how apply and archive work should be conducted.
 # This is separate from artifact rules above.
