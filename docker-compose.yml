@@ -1,9 +1,8 @@
-version: '3'
 services:
   nginx:
     image: nginx:latest
     ports:
-      - "80:80"
+      - "8093:80"
       - "443:443"
     volumes:
       - ./docker/nginx/conf.d:/etc/nginx/conf.d
@@ -22,6 +21,8 @@ services:
     working_dir: /app
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    environment:
+      - PHP_IDE_CONFIG=serverName=localhost
   db:
     image: postgres:13.3
     environment:
