@@ -9,4 +9,4 @@ Steps to start:
 - *make up*
 - *make deps*
 
-- Follow localhost:80/ in browser
+- Follow localhost:8093/ in browser

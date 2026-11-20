@@ -2,23 +2,25 @@
 
 ## 1. Стек проекта
 
-- PHP 8.1-FPM, без фреймворка. Приложение — `src/`, точка входа веба — `src/public/index.php`.
+- PHP 8.3-FPM, без фреймворка. Приложение — `src/`, точка входа веба — `src/public/index.php`.
 - nginx как reverse proxy/веб-сервер; docroot — `/app/public`.
 - PostgreSQL 13.3, сервис `db` (database/user/password: `skeleton`, host порт `5432`).
 - Docker Compose (`docker-compose.yml`) + `Makefile` как источник истины по командам.
 - Composer предустановлен в образе (`/usr/local/bin/composer`); зависимости и тесты — `src/composer.json`.
-- Тесты — PHPUnit 9.6 (`require-dev`), линтер в проекте не настроен: не выдумывай команд тестов/линта, которых нет в `Makefile`.
+- Тесты — Codeception 5 (`codeception/codeception`, модули `asserts` и `phpbrowser`
+  в `require-dev`), конфигурация `src/codeception.yml`, наборы — `src/tests/*.suite.yml`,
+  тесты — `src/tests/`. Линтер в проекте не настроен: не выдумывай команд тестов/линта,
+  которых нет в `Makefile`.
 
 ## 2. Команды: запуск, сборка, тесты
 
 ### Запуск
 
 - `make up` — поднять стек (`docker-compose up -d --remove-orphans`).
-- Веб: http://localhost:80. nginx `server_name` — `skeleton.local`, но default-сервер отвечает на localhost без правки `hosts`.
+- Веб: http://localhost:8093. nginx `server_name` — `skeleton.local`, но default-сервер
+  отвечает на localhost без правки `hosts`.
 - `make shell-php` — bash внутри контейнера `php`.
 - `make deps` — `composer install` в контейнере `php`.
-- `make cli` — запуск консольной игры в контейнере `php`
-  (`docker-compose exec php php cli/bin/tictactoe`).
 
 ### Сборка
 
@@ -26,16 +28,17 @@
 
 ### Тесты
 
-- Стандарт проекта — PHPUnit (`phpunit/phpunit` в `require-dev`), конфигурация
-  `src/phpunit.xml`, тесты в `src/cli/tests/`. Самописные раннеры и `make test`-заглушки
-  не используются.
+- Стандарт проекта — Codeception (`codeception/codeception` в `require-dev`),
+  конфигурация `src/codeception.yml`, тесты в `src/tests/` по наборам
+  `Unit`, `Functional`, `Acceptance`. Самописные раннеры не используются.
 - `make test` — весь набор в контейнере `php`
-  (`docker-compose exec php vendor/bin/phpunit -c phpunit.xml`).
+  (`docker-compose exec php vendor/bin/codecept run`).
 - Запуск в контейнере (рабочий каталог `/app`, то есть `src/`):
-  `docker-compose exec php vendor/bin/phpunit -c phpunit.xml`
-- Запуск одного модуля:
-  `docker-compose exec php vendor/bin/phpunit -c phpunit.xml --filter BoardTest`
-- Локально: `vendor/bin/phpunit -c phpunit.xml` из каталога `src/`.
+  `docker-compose exec php vendor/bin/codecept run`
+- Запуск одного набора: `docker-compose exec php vendor/bin/codecept run Unit`.
+- Запуск одного теста/фильтр:
+  `docker-compose exec php vendor/bin/codecept run Unit MeTest`.
+- Локально: `vendor/bin/codecept run` из каталога `src/`.
 - После добавления тестов обновляй этот раздел, если меняются команды запуска.
 
 ## 3. Правила

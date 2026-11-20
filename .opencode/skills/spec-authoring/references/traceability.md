@@ -6,12 +6,12 @@
 ## Цепочка
 
 ```
-Requirement      «Отклонение некорректного хода»
-    └── Scenario     «Ход в занятую клетку отклоняется»
-          └── TestClass::testMethod   BoardTest::testPlaceOccupiedThrows
-                └── API-строка         App\Game\Board::place(int $cell, Mark $mark): void
-                      └── Код          src/cli/src/Game/Board.php
-                            └── Диаграмма  design.md, classDiagram: узел Board
+Requirement      «Отклонение некорректной регистрации»
+    └── Scenario     «Регистрация с занятым email отклоняется»
+          └── TestClass::testMethod   RegistrationTest::testDuplicateEmailThrows
+                └── API-строка         App\User\Registration::register(string $email, string $password): User
+                      └── Код          src/User/Registration.php
+                            └── Диаграмма  design.md, classDiagram: узел Registration
 ```
 
 Каждое звено должно существовать. Если сценарий есть, а теста в таблице нет —
@@ -28,10 +28,10 @@ Requirement      «Отклонение некорректного хода»
 
 | Файл | Класс | Метод (сигнатура) | Действие | Что меняется |
 | --- | --- | --- | --- | --- |
-| `src/cli/src/Game/Board.php` | `App\Game\Board` | — | добавляется | Новый класс: поле 3×3 и проверка линий |
-| `src/cli/src/Game/Board.php` | `App\Game\Board` | `place(int $cell, Mark $mark): void` | добавляется | Ставит знак, бросает `IllegalMove` |
-| `src/cli/src/Game/Game.php` | `App\Game\Game` | `play(int $cell): void` | изменяется | Добавлена проверка занятости клетки |
-| `src/cli/src/Cli/Legacy.php` | `App\Cli\Legacy` | `render(): string` | удаляется | Заменён на `Terminal::renderBoard()` |
+| `src/User/Registration.php` | `App\User\Registration` | — | добавляется | Новый класс: регистрация по email и паролю |
+| `src/User/Registration.php` | `App\User\Registration` | `register(string $email, string $password): User` | добавляется | Создаёт пользователя, бросает `DuplicateEmail` |
+| `src/User/UserRepository.php` | `App\User\UserRepository` | `findByEmail(string $email): ?User` | добавляется | Ищет пользователя по email |
+| `src/User/LegacySignup.php` | `App\User\LegacySignup` | `register(array $data): array` | удаляется | Заменён на `Registration::register()` |
 
 Требования:
 
@@ -62,9 +62,9 @@ Requirement      «Отклонение некорректного хода»
 
 | Файл тестов | Тестовый метод | Что проверяет |
 | --- | --- | --- |
-| `src/cli/tests/Game/BoardTest.php` | `testPlaceOccupiedThrows` | Отклоняет ход в занятую клетку, бросая `IllegalMove::occupied()` |
-| `src/cli/tests/Game/BoardTest.php` | `testWinnerAllLines` | Определяет победителя по всем 8 линиям |
-| `src/cli/tests/Ai/MinimaxAiTest.php` | `testBlocksOpponentLine` | Занимает клетку, завершающую линию противника |
+| `src/tests/User/RegistrationTest.php` | `testDuplicateEmailThrows` | Отклоняет регистрацию с занятым email, бросая `DuplicateEmail::email()` |
+| `src/tests/User/RegistrationTest.php` | `testPasswordIsHashed` | Сохраняет пароль только в виде хеша |
+| `src/tests/User/UserRepositoryTest.php` | `testFindByEmailReturnsNull` | Возвращает `null`, если пользователь с таким email не найден |
 
 Требования:
 
@@ -89,9 +89,10 @@ Requirement      «Отклонение некорректного хода»
 
 | Класс | Публичный метод (сигнатура) | Что делает |
 | --- | --- | --- |
-| `App\Game\Board` | `place(int $cell, Mark $mark): void` | Ставит знак в свободную клетку; бросает `IllegalMove` вне диапазона или в занятую |
-| `App\Game\IllegalMove` | `static occupied(int $cell): self` | Создаёт ошибку хода в занятую клетку |
-| — | `parseCell(string $input): ?int` | Разбирает ввод в номер клетки или `null` |
+| `App\User\Registration` | `register(string $email, string $password): User` | Создаёт пользователя; бросает `DuplicateEmail` при занятом email |
+| `App\User\UserRepository` | `findByEmail(string $email): ?User` | Ищет пользователя по email или возвращает `null` |
+| `App\User\DuplicateEmail` | `static email(string $email): self` | Создаёт ошибку регистрации на занятый email |
+| — | `normalizeEmail(string $input): ?string` | Приводит ввод к нормализованному email или `null` |
 
 Требования к сигнатурам:
 
@@ -143,7 +144,7 @@ API; удалённый — обязан из неё исчезнуть.
 
 | Поломка | Признак | Лечение |
 | --- | --- | --- |
-| Дрейф имён | В коде `placeMark`, в таблице `place` | Переименовать или обновить таблицу в той же задаче |
+| Дрейф имён | В коде `registerUser`, в таблице `register` | Переименовать или обновить таблицу в той же задаче |
 | Тест-дубль | Один метод в двух спек-файлах | Оставить один раз в полной таблице |
 | Призрачные тесты | Метод в таблице, класса нет | Реализовать или убрать строку |
 | Неполная таблица | Тест есть в коде, но не в таблице | Добавить строку с файлом тестов в той же задаче |

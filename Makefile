@@ -11,7 +11,4 @@ deps:
 	docker-compose exec php composer install
 
 test:
-	docker-compose exec php vendor/bin/phpunit -c phpunit.xml
-
-cli:
-	docker-compose exec php php cli/bin/tictactoe
+	docker-compose exec php vendor/bin/codecept run
