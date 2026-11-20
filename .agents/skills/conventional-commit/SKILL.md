@@ -11,4 +11,5 @@ Inspect `git status`, `git diff`, and `git log --oneline -10`, then commit the i
 - Use a Conventional Commits type: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`.
 - Subject: concise, imperative, no trailing period.
 - Add a short body only when it clarifies the change.
+- Make one commit unless other option is required
 - Do not push.
