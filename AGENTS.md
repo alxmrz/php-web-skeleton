@@ -46,7 +46,7 @@
 ### OpenSpec / планирование
 
 - Все правила написания артефактов (`proposal.md`, `spec.md`, `design.md`,
-  `tasks.md`) — в скилле `spec-authoring` (`.opencode/skills/spec-authoring/`).
+  `tasks.md`) — в скилле `spec-authoring` (`.agents/skills/spec-authoring`).
   Загружай его перед работой над спекой; здесь они намеренно не повторяются.
 - `openspec/config.yaml` (`rules.*`) содержит только ссылку на этот скилл.
 - Тестовый фреймворк, команды запуска и раскладка каталогов — раздел 2 выше.
