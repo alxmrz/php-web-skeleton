@@ -1,0 +1,19 @@
+{
+  "generator": "agent-kit",
+  "kit_version": "1.0.0",
+  "kit_commit": "cbe20a2",
+  "installed_at": "2026-11-24T11:41:53Z",
+  "prefix": "alxmrz_kit",
+  "profile": "php",
+  "files": {
+    ".agents/rules/alxmrz_kit_general_rules.md": "83c27aeeb9bbb4cdf2d4569f1ac60edee0c9045b4555a09031bc3dd9a32c0d3f",
+    ".agents/rules/alxmrz_kit_php_rules.md": "b32b821e5e9e677a2377c73021f2c597384a6af56e246b6b2de2d762093e00cc",
+    ".agents/skills/alxmrz_kit_conventional-commit/SKILL.md": "0d1e74e49a2d5ad79ce1b071e61ef5b4bb7aa3e04977b549e721d88b0f137390",
+    ".agents/skills/alxmrz_kit_spec-authoring/references/design-diagrams.md": "83d6b131e246198092c29adcb99f5e9b82cdc054f2ba2d73a45a0c522d581048",
+    ".agents/skills/alxmrz_kit_spec-authoring/references/format-adapters.md": "1a3cd3a526332bd7b60ff08fdf97c936ff74d35cefaeded64b55553e596a9da9",
+    ".agents/skills/alxmrz_kit_spec-authoring/references/spec-techniques.md": "a7823fab10ba32b55b8e0eec070813e3559a9751718088858bdd1bf0dfa08b81",
+    ".agents/skills/alxmrz_kit_spec-authoring/references/tasks-slicing.md": "2d0bfa0f2359928bd1e2c7a88b65e171a8dbf0f2fb74be5396ee9572b14a742b",
+    ".agents/skills/alxmrz_kit_spec-authoring/references/traceability.md": "2c27270ae0075e1f4337a70993e0f64b9613d46d3282c507bbfd056f3e8bffc5",
+    ".agents/skills/alxmrz_kit_spec-authoring/SKILL.md": "5a17950ee6f920a93d6475181742473f965fb338adbcfccb01f4c708d618480b"
+  }
+}

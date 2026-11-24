@@ -1,0 +1,6 @@
+{
+  "instructions": [
+    "./.agents/rules/alxmrz_kit_general_rules.md",
+    "./.agents/rules/alxmrz_kit_php_rules.md"
+  ]
+}
