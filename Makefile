@@ -12,3 +12,9 @@ deps:
 
 test:
 	docker-compose exec php vendor/bin/codecept run
+
+test-unit:
+	docker-compose exec php vendor/bin/codecept run Unit
+
+test-acceptance:
+	docker-compose exec php vendor/bin/codecept run Acceptance
